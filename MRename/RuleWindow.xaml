@@ -1,0 +1,78 @@
+﻿<Window x:Class="MRename.RuleWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MRename"
+        mc:Ignorable="d"
+        Title="Rule" Height="350" Width="600" WindowStartupLocation="CenterScreen" Icon="App.ico">
+    <Grid>
+        <TabControl Margin="5,5,5,40">
+            <TabItem Header="Insert">
+                <Grid Margin="5">
+                    <TextBlock Text="Insert Text" Margin="5,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                    <CheckBox Content="Enabled" HorizontalAlignment="Right" VerticalAlignment="Top" IsChecked="{Binding Path=Rule.Insert}" Tag="Insert_Enable" />
+                    <TextBox Text="{Binding Path=Rule.InsertText}" VerticalAlignment="Top" Margin="5,25,5,0" Height="23" VerticalContentAlignment="Center" Tag="Insert_Enable" KeyUp="TextBox_KeyUp" />
+                    <TextBlock Text="Insert at" Margin="5,58,5,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                    <TextBox Text="{Binding Rule.InsertTextAt, FallbackValue=0}" VerticalAlignment="Top" Margin="56,55,0,0" Height="23" VerticalContentAlignment="Center" HorizontalAlignment="Left" Width="36" TextAlignment="Center" />
+                </Grid>
+            </TabItem>
+            <TabItem Header="Replace">
+                <Grid Margin="5">
+                    <TextBlock Text="Replace Text" Margin="5,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                    <CheckBox Content="Enabled" HorizontalAlignment="Right" VerticalAlignment="Top" IsChecked="{Binding Path=Rule.Replace}" Tag="Replace_Enable" />
+                    <TextBox Text="{Binding Path=Rule.ReplaceText}" VerticalAlignment="Top" Margin="5,25,5,0" Height="23" VerticalContentAlignment="Center" Tag="Replace_Enable" KeyUp="TextBox_KeyUp" />
+                    <TextBlock Text="With" Margin="5,58,5,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                    <TextBox Text="{Binding Path=Rule.ReplaceTextWith}" VerticalAlignment="Top" Margin="5,76,5,0" Height="23" VerticalContentAlignment="Center" />
+                    <CheckBox Content="Use regular expression" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5,110,5,0" IsChecked="{Binding Rule.ReplaceIsRegex}" />
+                </Grid>
+            </TabItem>
+            <TabItem Header="Remove">
+                <Grid Margin="5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Remove Text" Margin="5,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                    <CheckBox Content="Enabled" HorizontalAlignment="Right" VerticalAlignment="Top" IsChecked="{Binding Path=Rule.Remove}" Tag="Remove_Enable" Grid.Column="1" />
+                    <TextBlock Text="From" Margin="5,33,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                    <TextBox Text="{Binding Path=Rule.RemoveStartText}" VerticalAlignment="Top" Margin="42,30,5,0" Height="23" VerticalContentAlignment="Center" Tag="Remove_Enable" KeyUp="TextBox_KeyUp" />
+                    <CheckBox Content="Number" HorizontalAlignment="Left" VerticalAlignment="Top" IsChecked="{Binding Rule.RemoveStartIsNumber}" Margin="42,60,0,0" />
+                    <TextBlock Text="Until" Margin="15,33,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1" />
+                    <TextBox Text="{Binding Path=Rule.RemoveEndText}" VerticalAlignment="Top" Margin="45,30,5,0" Height="23" VerticalContentAlignment="Center" Grid.Column="1" />
+                    <CheckBox Content="Number" HorizontalAlignment="Left" VerticalAlignment="Top" IsChecked="{Binding Rule.RemoveEndIsNumber}" Margin="45,60,0,0" Grid.Column="1" />
+                </Grid>
+            </TabItem>
+            <TabItem Header="Text">
+                <Grid Margin="5">
+                    <TextBlock Text="Lines" Margin="5,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                    <CheckBox Content="Enabled" HorizontalAlignment="Right" VerticalAlignment="Top" IsChecked="{Binding Path=Rule.Text}" Tag="Text_Enable" />
+                    <TextBox Text="{Binding Path=Rule.LinesText}" Margin="5,25,5,5" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" AcceptsReturn="True" TextWrapping="NoWrap" Tag="Text_Enable" KeyUp="TextBox_KeyUp" />
+                </Grid>
+            </TabItem>
+            <TabItem Header="Casing">
+                <StackPanel Orientation="Vertical" Margin="5,10">
+                    <CheckBox Content="Lowercase text" HorizontalAlignment="Left" VerticalAlignment="Top" IsChecked="{Binding Path=Rule.CasingLowercase}" Margin="10"/>
+                    <CheckBox Content="Uppercase text" HorizontalAlignment="Left" VerticalAlignment="Top" IsChecked="{Binding Path=Rule.CasingUppercase}" Margin="10"/>
+                    <CheckBox Content="Uppercase words" HorizontalAlignment="Left" VerticalAlignment="Top" IsChecked="{Binding Path=Rule.CasingUppercaseWords}" Margin="10"/>
+                    <CheckBox Content="Uppercase first word" HorizontalAlignment="Left" VerticalAlignment="Top" IsChecked="{Binding Path=Rule.CasingUppercaseFirstWord}" Margin="10"/>
+                </StackPanel>
+            </TabItem>
+            <TabItem Header="Misc">
+                <StackPanel Orientation="Vertical" Margin="5,10">
+                    <CheckBox Content="Trim whitespace" HorizontalAlignment="Left" VerticalAlignment="Top" IsChecked="{Binding Path=Rule.TrimWhitespace}" Margin="10"/>
+                    <CheckBox Content="Clean double spaces" HorizontalAlignment="Left" VerticalAlignment="Top" IsChecked="{Binding Path=Rule.CleanDoubleSpaces}" Margin="10"/>
+                    <StackPanel Orientation="Horizontal">
+                        <CheckBox Content="Random numbering" HorizontalAlignment="Left" VerticalAlignment="Top" IsChecked="{Binding Path=Rule.RandomNumbering}" Margin="10" Tag="RandomNumbering_Enable"/>
+                        <TextBlock Text="Insert" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5,9"/>
+                        <TextBox Text="{Binding Path=Rule.RandomNumbersCount}" VerticalAlignment="Top" Margin="5,5" Width="42" Height="23" VerticalContentAlignment="Center" HorizontalAlignment="Left" TextAlignment="Center" Tag="RandomNumbering_Enable" KeyUp="TextBox_KeyUp" />
+                        <TextBlock TextWrapping="Wrap" Text="numbers at" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5,9"/>
+                        <TextBox Text="{Binding Path=Rule.RandomNumbersAt}" VerticalAlignment="Top" Margin="5,5" Height="23" VerticalContentAlignment="Center" HorizontalAlignment="Left" Width="42" TextAlignment="Center" />
+                    </StackPanel>
+                </StackPanel>
+            </TabItem>
+        </TabControl>
+        <CheckBox Content="Apply to Extension" HorizontalAlignment="Left" Margin="7,0,0,13" VerticalAlignment="Bottom" IsChecked="{Binding Path=Rule.Extension}"/>
+        <Button x:Name="BtnSave" Content="Save" HorizontalAlignment="Right" Margin="0,0,7,10" Padding="10,2" VerticalAlignment="Bottom" Click="BtnSave_Click" />
+    </Grid>
+</Window>

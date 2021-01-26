@@ -7,10 +7,10 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Collections.Generic;
 using System.Windows.Controls;
-using System.Windows.Media.Animation;
 using System.Globalization;
 using System.Threading;
 using System.Reflection;
+using System.Diagnostics;
 
 namespace MRename
 {
@@ -19,6 +19,8 @@ namespace MRename
     /// </summary>
     public partial class MainWindow : Window
     {
+        private string githubLink = "https://github.com/Masaz-/MRename";
+
         public ObservableCollection<MFile> Files { get; set; }
         public ObservableCollection<MRule> Rules { get; set; }
 
@@ -34,7 +36,7 @@ namespace MRename
 
             Rules.CollectionChanged += Rules_CollectionChanged;
 
-            TbVersion.Text = "Version " + Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            LinkGithub.Inlines.Add("Version " + Assembly.GetExecutingAssembly().GetName().Version.ToString());
 
             DataContext = this;
         }
@@ -158,10 +160,10 @@ namespace MRename
                             }
                         }
 
-                        if (Rules[r].Remove && Rules[r].RemoveStartText != "" && Rules[r].RemoveEndText != "")
+                        if (Rules[r].Remove && Rules[r].RemoveStartText != "" && Rules[r].RemoveEndText != "") // Remove text
                         {
                             int start = 0;
-                            int end = fullname.Length - 1;
+                            int end = fullname.Length;
 
                             if (Rules[r].RemoveStartIsNumber)
                             {
@@ -169,7 +171,7 @@ namespace MRename
 
                                 if (start == -1)
                                 {
-                                    start = fullname.Length - 1;
+                                    start = fullname.Length;
                                 }
                             }
                             else
@@ -177,9 +179,9 @@ namespace MRename
                                 start = fullname.IndexOf(Rules[r].RemoveStartText);
                             }
 
-                            if (start > fullname.Length - 1)
+                            if (start > fullname.Length)
                             {
-                                start = fullname.Length - 1;
+                                start = fullname.Length;
                             }
 
                             if (Rules[r].RemoveEndIsNumber)
@@ -188,7 +190,7 @@ namespace MRename
 
                                 if (end == -1)
                                 {
-                                    end = fullname.Length - 1;
+                                    end = fullname.Length;
                                 }
                             }
                             else
@@ -199,18 +201,18 @@ namespace MRename
                                 }
                                 else
                                 {
-                                    end = fullname.Length - 1;
+                                    end = fullname.Length;
                                 }
                             }
 
-                            if (end > fullname.Length - 1)
+                            if (end > fullname.Length)
                             {
-                                end = fullname.Length - 1;
+                                end = fullname.Length;
                             }
 
                             if (start == end)
                             {
-                                fullname = fullname.Substring(start);
+                                fullname = fullname.Remove(start);
                             }
                             else
                             {
@@ -221,10 +223,10 @@ namespace MRename
 
                                 if (end == -1)
                                 {
-                                    end = fullname.Length - 1;
+                                    end = fullname.Length;
                                 }
 
-                                fullname = fullname.Substring(start, end);
+                                fullname = fullname.Remove(start, end - start);
                             }
                         }
 
@@ -286,8 +288,7 @@ namespace MRename
 
                         NewName = fullname;
 
-                        // Add extension back
-                        if (!Rules[r].Extension)
+                        if (!Rules[r].Extension) // Add extension back
                         {
                             NewName += ext;
                         }
@@ -493,6 +494,11 @@ namespace MRename
                     Rules.Add(rw.Rule);
                 }
             }
+        }
+
+        private void LinkGithub_Click(object sender, RoutedEventArgs e)
+        {
+            Process.Start(new ProcessStartInfo(githubLink));
         }
     }
 }

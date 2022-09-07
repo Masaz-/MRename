@@ -19,12 +19,12 @@ namespace MRename
     /// </summary>
     public partial class MainWindow : Window
     {
-        private string githubLink = "https://github.com/Masaz-/MRename";
+        private readonly string githubLink = "https://github.com/Masaz-/MRename";
 
         public ObservableCollection<MFile> Files { get; set; }
         public ObservableCollection<MRule> Rules { get; set; }
 
-        Random rnd = new Random();
+        readonly Random rnd = new Random();
         RuleWindow ruleWindow = null;
 
         public MainWindow()
@@ -60,8 +60,10 @@ namespace MRename
         private void OpenFilePicker()
         {
             List<MFile> tmpFiles = new List<MFile>();
-            OpenFileDialog dialog = new OpenFileDialog();
-            dialog.Multiselect = true;
+            OpenFileDialog dialog = new OpenFileDialog
+            {
+                Multiselect = true
+            };
             var result = dialog.ShowDialog();
 
             if (result.HasValue)
@@ -284,6 +286,14 @@ namespace MRename
                             {
                                 fullname = fullname.Insert(Rules[r].RandomNumbersAt, LongRandom(rndMin, rndMax, rnd).ToString());
                             }
+                        }
+
+                        if (Rules[r].RandomizeFilenames) // Randomize filenames
+                        {
+                            long rndMin = 100000000;
+                            long rndMax = rndMin * 10;
+
+                            fullname = LongRandom(rndMin, rndMax, rnd).ToString();
                         }
 
                         NewName = fullname;

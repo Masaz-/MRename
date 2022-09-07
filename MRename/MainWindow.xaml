@@ -5,46 +5,58 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MRename"
         mc:Ignorable="d"
-        Title="MRename" Height="600" Width="800" WindowStartupLocation="CenterScreen" MinHeight="450" MinWidth="302" Icon="App.ico">
+        Title="MRename" Height="600" Width="800" WindowStartupLocation="CenterScreen" MinHeight="500" MinWidth="450" Icon="App.ico">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="2*"/>
             <RowDefinition Height="3*"/>
         </Grid.RowDefinitions>
         <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Rules" VerticalAlignment="Top" />
-        <TextBlock Margin="175,0,175,13" VerticalAlignment="Bottom" Grid.Row="1" TextAlignment="Center" Height="16" TextWrapping="NoWrap">
-            <Hyperlink x:Name="LinkGithub" Click="LinkGithub_Click" ></Hyperlink>
-        </TextBlock>
-        
-        <DataGrid x:Name="DgRules" ItemsSource="{Binding Rules}" Margin="10,27,10,10" Background="{x:Null}" HorizontalGridLinesBrush="{x:Null}" VerticalGridLinesBrush="{x:Null}" GridLinesVisibility="None" CanUserAddRows="False" AutoGenerateColumns="False" HeadersVisibility="Column" MouseDoubleClick="DgRules_MouseDoubleClick" MouseUp="DgRules_MouseUp">
+        <Label Margin="175,0,175,12" VerticalAlignment="Bottom" Grid.Row="1" Height="24" VerticalContentAlignment="Center" HorizontalContentAlignment="Center">
+            <Hyperlink x:Name="LinkGithub" Click="LinkGithub_Click"></Hyperlink>
+        </Label>
+
+        <DataGrid x:Name="DgRules" ItemsSource="{Binding Rules}" Margin="10,27,45,10" Background="{x:Null}" HorizontalGridLinesBrush="{x:Null}" VerticalGridLinesBrush="{x:Null}" GridLinesVisibility="None" CanUserAddRows="False" AutoGenerateColumns="False" HeadersVisibility="Column" MouseDoubleClick="DgRules_MouseDoubleClick" MouseUp="DgRules_MouseUp">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Rule" Width="2*" Binding="{Binding Path=Name}" IsReadOnly="True"></DataGridTextColumn>
                 <DataGridTextColumn Header="Description" Width="4*" Binding="{Binding Path=Description}" IsReadOnly="True"></DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,10,10">
-            <Button x:Name="BtnRemoveRule" Content="x" HorizontalAlignment="Right" Margin="0,0,0,-1" VerticalAlignment="Bottom" Width="25" Height="25" Padding="0,0,0,2" Click="BtnRemoveRule_Click" Foreground="Red" ToolTip="Remove Rule" />
-            <Button x:Name="BtnUp" Content="🠙" HorizontalAlignment="Right" Margin="0,0,0,-1" VerticalAlignment="Bottom" Width="25" Height="25" Padding="0,0,0,2" Click="BtnUp_Click" ToolTip="Move Up" />
-            <Button x:Name="BtnDown" Content="🠛" HorizontalAlignment="Right" Margin="0,0,0,-1" VerticalAlignment="Bottom" Width="25" Height="25" Padding="0,0,0,2" Click="BtnDown_Click" ToolTip="Move Down" />
-            <Button x:Name="BtnAddRule" Content="+" HorizontalAlignment="Right" Margin="0" VerticalAlignment="Bottom" Width="25" Height="25" Padding="0,0,0,2" Click="BtnAddRule_Click" ToolTip="Add Rule" />
-        </StackPanel>
+        <Grid VerticalAlignment="Stretch" HorizontalAlignment="Right" Margin="0,27,10,10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <Button x:Name="BtnRemoveRule" Content="x" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Stretch" Width="30" Padding="0,0,0,2" Click="BtnRemoveRule_Click" Foreground="Red" ToolTip="Remove Rule" Grid.Row="0" />
+            <Button x:Name="BtnUp" Content="🠙" HorizontalAlignment="Center" Margin="0,3,0,0" VerticalAlignment="Stretch" Width="30" Padding="0,0,0,2" Click="BtnUp_Click" ToolTip="Move Up" Grid.Row="1" />
+            <Button x:Name="BtnDown" Content="🠛" HorizontalAlignment="Center" Margin="0,3,0,3" VerticalAlignment="Stretch" Width="30" Padding="0,0,0,2" Click="BtnDown_Click" ToolTip="Move Down" Grid.Row="2" />
+            <Button x:Name="BtnAddRule" Content="+" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Stretch" Width="30" Padding="0,0,0,2" Click="BtnAddRule_Click" ToolTip="Add Rule" Grid.Row="3" />
+        </Grid>
         <TextBlock HorizontalAlignment="Left" Margin="10,5,0,0" TextWrapping="Wrap" Text="Files" VerticalAlignment="Top" Grid.Row="1" />
-        <DataGrid x:Name="DgFiles" ItemsSource="{Binding Files}" Margin="10,22,10,37" Grid.Row="1" Background="{x:Null}" HorizontalGridLinesBrush="{x:Null}" VerticalGridLinesBrush="{x:Null}" GridLinesVisibility="None" CanUserAddRows="False" CanUserSortColumns="False" AutoGenerateColumns="False" HeadersVisibility="Column" AllowDrop="True" Drop="DgFiles_Drop" MouseDoubleClick="DgFiles_MouseDoubleClick">
+        <DataGrid x:Name="DgFiles" ItemsSource="{Binding Files}" Margin="10,22,45,47" Grid.Row="1" Background="{x:Null}" HorizontalGridLinesBrush="{x:Null}" VerticalGridLinesBrush="{x:Null}" GridLinesVisibility="None" CanUserAddRows="False" CanUserSortColumns="False" AutoGenerateColumns="False" HeadersVisibility="Column" AllowDrop="True" Drop="DgFiles_Drop" MouseDoubleClick="DgFiles_MouseDoubleClick">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Filename" Width="1*" Binding="{Binding Name}" IsReadOnly="True"></DataGridTextColumn>
                 <DataGridTextColumn Header="New Filename" Width="1*" Binding="{Binding NewName}"></DataGridTextColumn>
                 <DataGridTextColumn Header="Status" Width="*" Binding="{Binding Status}" IsReadOnly="True"></DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,10,37" Grid.Row="1">
-            <Button x:Name="BtnRemoveFile" Content="x" HorizontalAlignment="Right" Margin="0,0,0,-1" VerticalAlignment="Bottom" Width="25" Height="25" Padding="0,0,0,2" Grid.Row="1" Click="BtnRemoveFile_Click" Foreground="Red" ToolTip="Remove File" />
-            <Button x:Name="BtnSortUp" Content="🢑" HorizontalAlignment="Right" Margin="0,0,0,-1" VerticalAlignment="Bottom" Width="25" Height="25" Padding="0,-15,0,2" Grid.Row="1" ToolTip="Sort Files Ascending" FontSize="18" Click="BtnSortUp_Click" />
-            <Button x:Name="BtnSortDown" Content="🢓" HorizontalAlignment="Right" Margin="0,0,0,-1" VerticalAlignment="Bottom" Width="25" Height="25" Padding="0,5,0,2" Grid.Row="1" ToolTip="Sort Files Descending" FontSize="18" Click="BtnSortDown_Click" />
-            <Button x:Name="BtnAddFiles" Content="+" HorizontalAlignment="Right" Margin="0" VerticalAlignment="Bottom" Width="25" Height="25" Padding="0,0,0,2" Grid.Row="1" Click="BtnAddFiles_Click" ToolTip="Add File" />
-        </StackPanel>
-        <Button x:Name="BtnClearRules" Content="Clear Rules" HorizontalAlignment="Left" Margin="10,0,0,10" Grid.Row="1" VerticalAlignment="Bottom" Padding="10,2" Click="BtnClearRules_Click" />
-        <Button x:Name="BtnClearFiles" Content="Clear Files" HorizontalAlignment="Left" Margin="95,0,0,10" Grid.Row="1" VerticalAlignment="Bottom" Padding="10,2" Click="BtnClearFiles_Click" />
-        <Button x:Name="BtnRename" Content="Rename" HorizontalAlignment="Right" Margin="0,0,10,10" Grid.Row="1" VerticalAlignment="Bottom" Padding="10,2" Click="BtnRename_Click" />
+        <Grid VerticalAlignment="Stretch" HorizontalAlignment="Right" Margin="0,22,10,47" Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <Button x:Name="BtnRemoveFile" Content="x" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Stretch" Width="30" Padding="0,0,0,2" Grid.Row="0" Click="BtnRemoveFile_Click" Foreground="Red" ToolTip="Remove File" />
+            <Button x:Name="BtnSortUp" Content="🢑" HorizontalAlignment="Center" Margin="0,3,0,0" VerticalAlignment="Stretch" Width="30" Padding="0,-15,0,0" Grid.Row="1" ToolTip="Sort Files Ascending" FontSize="18" Click="BtnSortUp_Click" />
+            <Button x:Name="BtnSortDown" Content="🢓" HorizontalAlignment="Center" Margin="0,3,0,3" VerticalAlignment="Stretch" Width="30" Padding="0,10,0,2" Grid.Row="2" ToolTip="Sort Files Descending" FontSize="18" Click="BtnSortDown_Click" />
+            <Button x:Name="BtnAddFiles" Content="+" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Stretch" Width="30" Padding="0,0,0,2" Grid.Row="3" Click="BtnAddFiles_Click" ToolTip="Add File" />
+        </Grid>
+        <Button x:Name="BtnClearRules" Content="Clear Rules" HorizontalAlignment="Left" Margin="10,0,0,10" Grid.Row="1" VerticalAlignment="Bottom" Padding="10,5" Click="BtnClearRules_Click" />
+        <Button x:Name="BtnClearFiles" Content="Clear Files" HorizontalAlignment="Left" Margin="95,0,0,10" Grid.Row="1" VerticalAlignment="Bottom" Padding="10,5" Click="BtnClearFiles_Click" />
+        <Button x:Name="BtnRename" Content="Rename" HorizontalAlignment="Right" Margin="0,0,10,10" Grid.Row="1" VerticalAlignment="Bottom" Padding="10,5" Click="BtnRename_Click" />
 
     </Grid>
 </Window>

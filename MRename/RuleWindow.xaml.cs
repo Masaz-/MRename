@@ -93,6 +93,11 @@ namespace MRename
                 Rule.Description += String.Format("Insert {0} random {1} at {2}. ", Rule.RandomNumbersCount, Rule.RandomNumbersCount > 1 ? "numbers" : "number", Rule.RandomNumbersAt > -1 ? Rule.RandomNumbersAt.ToString() : "the end");
             }
 
+            if (Rule.RandomizeFilenames)
+            {
+                Rule.Description += "Randomize filenames. ";
+            }
+
             if (Rule.Description == "")
             {
                 Rule.Description += "Do nothing.";
@@ -117,15 +122,13 @@ namespace MRename
             TextBox tb = (TextBox)sender;
             UIElementCollection children;
 
-            if (tb.Parent is Grid)
+            if (tb.Parent is Grid grid)
             {
-                Grid parent = (Grid)tb.Parent;
-                children = parent.Children;
+                children = grid.Children;
             }
-            else if (tb.Parent is StackPanel)
+            else if (tb.Parent is StackPanel stackpanel)
             {
-                StackPanel parent = (StackPanel)tb.Parent;
-                children = parent.Children;
+                children = stackpanel.Children;
             }
             else
             {
@@ -137,10 +140,8 @@ namespace MRename
 
             foreach (var child in children)
             {
-                if (child is CheckBox)
+                if (child is CheckBox cb)
                 {
-                    CheckBox cb = (CheckBox)child;
-
                     if (cb.Tag == null)
                     {
                         continue;

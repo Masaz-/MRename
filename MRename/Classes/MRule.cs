@@ -21,6 +21,7 @@ namespace MRename
         private bool _casingUppercase;
         private bool _casingUppercaseWords;
         private bool _casingUppercaseFirstWord;
+        private bool _randomizeFilenames;
         private string _insertText;
         private string _replaceText;
         private string _replaceTextWith;
@@ -229,6 +230,19 @@ namespace MRename
             {
                 _casingUppercaseFirstWord = value;
                 NotifyPropertyChanged("CasingUppercaseFirstWord");
+            }
+        }
+
+        public bool RandomizeFilenames
+        {
+            get
+            {
+                return _randomizeFilenames;
+            }
+            set
+            {
+                _randomizeFilenames = value;
+                NotifyPropertyChanged("RandomizeFilenames");
             }
         }
 

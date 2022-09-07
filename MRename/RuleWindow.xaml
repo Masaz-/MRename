@@ -63,12 +63,13 @@
                     <CheckBox Content="Trim whitespace" HorizontalAlignment="Left" VerticalAlignment="Top" IsChecked="{Binding Path=Rule.TrimWhitespace}" Margin="10"/>
                     <CheckBox Content="Clean double spaces" HorizontalAlignment="Left" VerticalAlignment="Top" IsChecked="{Binding Path=Rule.CleanDoubleSpaces}" Margin="10"/>
                     <StackPanel Orientation="Horizontal">
-                        <CheckBox Content="Random numbering" HorizontalAlignment="Left" VerticalAlignment="Top" IsChecked="{Binding Path=Rule.RandomNumbering}" Margin="10" Tag="RandomNumbering_Enable"/>
+                        <CheckBox Content="Random numbers" HorizontalAlignment="Left" VerticalAlignment="Top" IsChecked="{Binding Path=Rule.RandomNumbering}" Margin="10" Tag="RandomNumbering_Enable"/>
                         <TextBlock Text="Insert" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5,9"/>
                         <TextBox Text="{Binding Path=Rule.RandomNumbersCount}" VerticalAlignment="Top" Margin="5,5" Width="42" Height="23" VerticalContentAlignment="Center" HorizontalAlignment="Left" TextAlignment="Center" Tag="RandomNumbering_Enable" KeyUp="TextBox_KeyUp" />
                         <TextBlock TextWrapping="Wrap" Text="numbers at" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5,9"/>
                         <TextBox Text="{Binding Path=Rule.RandomNumbersAt}" VerticalAlignment="Top" Margin="5,5" Height="23" VerticalContentAlignment="Center" HorizontalAlignment="Left" Width="42" TextAlignment="Center" />
                     </StackPanel>
+                    <CheckBox Content="Randomize filenames" HorizontalAlignment="Left" VerticalAlignment="Top" IsChecked="{Binding Path=Rule.RandomizeFilenames}" Margin="10"/>
                 </StackPanel>
             </TabItem>
         </TabControl>

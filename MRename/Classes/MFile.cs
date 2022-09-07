@@ -118,7 +118,7 @@ namespace MRename
             Status = "";
         }
 
-        public void Rename(bool extension = false)
+        public void Rename()
         {
             if (CanRename)
             {

@@ -12,7 +12,7 @@
             <RowDefinition Height="3*"/>
         </Grid.RowDefinitions>
         <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Rules" VerticalAlignment="Top" />
-        <Label Margin="175,0,175,12" VerticalAlignment="Bottom" Grid.Row="1" Height="24" VerticalContentAlignment="Center" HorizontalContentAlignment="Center">
+        <Label Margin="175,0,80,12" VerticalAlignment="Bottom" Grid.Row="1" Height="24" VerticalContentAlignment="Center" HorizontalContentAlignment="Center">
             <Hyperlink x:Name="LinkGithub" Click="LinkGithub_Click"></Hyperlink>
         </Label>
 
@@ -28,11 +28,15 @@
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
-            <Button x:Name="BtnRemoveRule" Content="x" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Stretch" Width="30" Padding="0,0,0,2" Click="BtnRemoveRule_Click" Foreground="Red" ToolTip="Remove Rule" Grid.Row="0" />
-            <Button x:Name="BtnUp" Content="🠙" HorizontalAlignment="Center" Margin="0,3,0,0" VerticalAlignment="Stretch" Width="30" Padding="0,0,0,2" Click="BtnUp_Click" ToolTip="Move Up" Grid.Row="1" />
-            <Button x:Name="BtnDown" Content="🠛" HorizontalAlignment="Center" Margin="0,3,0,3" VerticalAlignment="Stretch" Width="30" Padding="0,0,0,2" Click="BtnDown_Click" ToolTip="Move Down" Grid.Row="2" />
-            <Button x:Name="BtnAddRule" Content="+" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Stretch" Width="30" Padding="0,0,0,2" Click="BtnAddRule_Click" ToolTip="Add Rule" Grid.Row="3" />
+            <Button x:Name="BtnRemoveRule" Content="x" HorizontalAlignment="Center" Margin="0,0,0,3" VerticalAlignment="Stretch" Width="30" Padding="0,0,0,2" Click="BtnRemoveRule_Click" Foreground="Red" ToolTip="Remove Rule" Grid.Row="0" />
+            <Button x:Name="BtnUp" Content="🠙" HorizontalAlignment="Center" Margin="0,0,0,3" VerticalAlignment="Stretch" Width="30" Padding="0,0,0,2" Click="BtnUp_Click" ToolTip="Move Up" Grid.Row="1" />
+            <Button x:Name="BtnDown" Content="🠛" HorizontalAlignment="Center" Margin="0,0,0,3" VerticalAlignment="Stretch" Width="30" Padding="0,0,0,2" Click="BtnDown_Click" ToolTip="Move Down" Grid.Row="2" />
+            <Button x:Name="BtnAddRule" Content="+" HorizontalAlignment="Center" Margin="0,0,0,3" VerticalAlignment="Stretch" Width="30" Padding="0,0,0,2" Click="BtnAddRule_Click" ToolTip="Add Rule" Grid.Row="3" />
+            <Button x:Name="BtnAddRuleFromFile" Content="L" HorizontalAlignment="Center" Margin="0,0,0,3" VerticalAlignment="Stretch" Width="30" Padding="0,0,0,2" ToolTip="Add Rules from a File" Grid.Row="4" Click="BtnAddRuleFromFile_Click" />
+            <Button x:Name="BtnSaveRuleToFile" Content="S" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Stretch" Width="30" Padding="0,0,0,2" ToolTip="Save Rule to a File" Grid.Row="5" Click="BtnSaveRuleToFile_Click" />
         </Grid>
         <TextBlock HorizontalAlignment="Left" Margin="10,5,0,0" TextWrapping="Wrap" Text="Files" VerticalAlignment="Top" Grid.Row="1" />
         <DataGrid x:Name="DgFiles" ItemsSource="{Binding Files}" Margin="10,22,45,47" Grid.Row="1" Background="{x:Null}" HorizontalGridLinesBrush="{x:Null}" VerticalGridLinesBrush="{x:Null}" GridLinesVisibility="None" CanUserAddRows="False" CanUserSortColumns="False" AutoGenerateColumns="False" HeadersVisibility="Column" AllowDrop="True" Drop="DgFiles_Drop" MouseDoubleClick="DgFiles_MouseDoubleClick">

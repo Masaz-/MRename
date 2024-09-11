@@ -11,6 +11,7 @@ using System.Globalization;
 using System.Threading;
 using System.Reflection;
 using System.Diagnostics;
+using MRename.Classes;
 
 namespace MRename
 {
@@ -57,33 +58,29 @@ namespace MRename
             ruleWindow.ShowDialog();
         }
 
-        private void OpenFilePicker()
+        private string[] OpenFiles(string path, string filter, out string pickedPath)
         {
-            List<MFile> tmpFiles = new List<MFile>();
+            string[] files;
             OpenFileDialog dialog = new OpenFileDialog
             {
-                Multiselect = true
+                Multiselect = true,
+                Filter = filter,
+                InitialDirectory = path
             };
             var result = dialog.ShowDialog();
 
-            if (result.HasValue)
+            if (result.HasValue && dialog.FileNames.Length > 0)
             {
-                var filenames = dialog.FileNames;
-
-                foreach (string filename in filenames)
-                {
-                    tmpFiles.Add(new MFile(filename));
-                }
-
-                tmpFiles = new List<MFile>(tmpFiles.OrderByDescending(f => f.Name));
-
-                foreach (MFile file in tmpFiles)
-                {
-                    Files.Add(file);
-                }
-
-                ApplyRules();
+                pickedPath = Path.GetDirectoryName(dialog.FileNames[0]);
+                files = dialog.FileNames;
             }
+            else
+            {
+                pickedPath = "";
+                files = new string[0];
+            }
+
+            return files;
         }
 
         private void RenameFiles()
@@ -98,6 +95,49 @@ namespace MRename
                 {
                     Files[i].Status = "Could not rename the file: " + ex.Message;
                 }
+            }
+        }
+
+        private void PickFiles(string path, out string pickedPath)
+        {
+            List<MFile> tmpFiles = new List<MFile>();
+            string[] filenames = OpenFiles(path, "All Files|*.*", out pickedPath);
+
+            foreach (string filename in filenames)
+            {
+                tmpFiles.Add(new MFile(filename));
+            }
+
+            tmpFiles = new List<MFile>(tmpFiles.OrderByDescending(f => f.Name));
+
+            foreach (MFile file in tmpFiles)
+            {
+                Files.Add(file);
+            }
+
+            ApplyRules();
+        }
+
+        private void SaveRules()
+        {
+            SaveFileDialog dlg = new SaveFileDialog
+            {
+                DefaultExt = ".xml",
+                Filter = "MRule files (.xml)|*.xml"
+            };
+
+            var result = dlg.ShowDialog();
+
+            if (result == true)
+            {
+                List<MRule> listOfRules = new List<MRule>();
+
+                foreach (MRule rule in Rules)
+                {
+                    listOfRules.Add(rule);
+                }
+
+                MSerializer.WriteToXmlFile(dlg.FileName, listOfRules);
             }
         }
 
@@ -346,6 +386,8 @@ namespace MRename
                     DgRules.SelectedIndex = selectedIndex;
                 }
             }
+
+            ApplyRules();
         }
 
         private void BtnUp_Click(object sender, RoutedEventArgs e)
@@ -354,6 +396,8 @@ namespace MRename
             {
                 Rules.Move(DgRules.SelectedIndex, DgRules.SelectedIndex - 1);
             }
+
+            ApplyRules();
         }
 
         private void BtnDown_Click(object sender, RoutedEventArgs e)
@@ -362,11 +406,49 @@ namespace MRename
             {
                 Rules.Move(DgRules.SelectedIndex, DgRules.SelectedIndex + 1);
             }
+
+            ApplyRules();
         }
 
         private void BtnAddRule_Click(object sender, RoutedEventArgs e)
         {
             OpenRuleWindow();
+        }
+
+        private void BtnAddRuleFromFile_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                string[] filepaths = OpenFiles(Properties.Settings.Default.LastLocation, "MRule Files (.xml)|*.xml", out string pickedPath);
+
+                Properties.Settings.Default.LastLocation = pickedPath;
+                Properties.Settings.Default.Save();
+
+                foreach (string filepath in filepaths)
+                {
+                    List<MRule> r = MSerializer.ReadFromXmlFile<List<MRule>>(filepath);
+
+                    foreach (MRule rule in r)
+                    {
+                        Rules.Add(rule);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture("en-US");
+                Thread.CurrentThread.CurrentUICulture = new CultureInfo("en-US");
+
+                MessageBox.Show("Failed to read from file: " + ex.Message + ex.StackTrace, "Reading Rules from a File Failed", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void BtnSaveRuleToFile_Click(object sender, RoutedEventArgs e)
+        {
+            if (Rules.Count > 0)
+            {
+                SaveRules();
+            }
         }
 
         private void DgRules_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
@@ -419,7 +501,7 @@ namespace MRename
 
         private void DgFiles_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            OpenFilePicker();
+            PickFiles("", out string pickedPath);
         }
 
         private void BtnSortUp_Click(object sender, RoutedEventArgs e)
@@ -462,7 +544,7 @@ namespace MRename
 
         private void BtnAddFiles_Click(object sender, RoutedEventArgs e)
         {
-            OpenFilePicker();
+            PickFiles("", out string pickedPath);
         }
 
         // Bottom

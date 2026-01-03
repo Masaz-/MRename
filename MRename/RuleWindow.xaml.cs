@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media.Animation;
 
 namespace MRename
 {
@@ -26,6 +27,40 @@ namespace MRename
             }
 
             DataContext = this;
+        }
+
+        private string FormatFilename(string text)
+        {
+            text = text.Trim();
+            text = text.Replace("<", "(");
+            text = text.Replace(">", ")");
+            text = text.Replace(":", "");
+            text = text.Replace("\"", "'");
+            text = text.Replace("/", "-");
+            text = text.Replace("\\", "-");
+            text = text.Replace("|", "-");
+            text = text.Replace("?", "");
+            text = text.Replace("*", "");
+
+            return text;
+        }
+
+        private void BtnFormat_Click(object sender, RoutedEventArgs e)
+        {
+            string[] lines = Rule.LinesText.Split(
+                new[] { "\r\n", "\r", "\n" },
+                StringSplitOptions.None
+            );
+
+            Rule.LinesText = "";
+
+            foreach (string row in lines)
+            {
+                if (row != "")
+                {
+                    Rule.LinesText += FormatFilename(row) + Environment.NewLine;
+                }
+            }
         }
 
         private void BtnSave_Click(object sender, RoutedEventArgs e)
@@ -151,7 +186,7 @@ namespace MRename
 
                     if (tag == cbTag)
                     {
-                        cb.IsChecked = (inp != "");
+                        cb.IsChecked = inp != "";
                     }
                 }
             }

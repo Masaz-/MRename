@@ -501,7 +501,7 @@ namespace MRename
 
         private void DgFiles_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            PickFiles("", out string pickedPath);
+            PickFiles("", out _);
         }
 
         private void BtnSortUp_Click(object sender, RoutedEventArgs e)
@@ -544,7 +544,7 @@ namespace MRename
 
         private void BtnAddFiles_Click(object sender, RoutedEventArgs e)
         {
-            PickFiles("", out string pickedPath);
+            PickFiles("", out _);
         }
 
         // Bottom
